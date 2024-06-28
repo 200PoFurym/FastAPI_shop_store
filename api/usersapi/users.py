@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from fastapi_pagination import paginate
 from pydantic import BaseModel
 from database.userservice import *
 from database import get_db
@@ -26,6 +27,11 @@ async def user_registration(validator: UserValidator):
     else:
         return {'status': 0, 'message': 'Данный пользователь уже зарегестрирован'}
 
+@user_router.get('/api/all_users')
+async def get_all_users_db():
+    data = get_all_users()
+    return data
+
 @user_router.post('/api/login')
 async def login_user_api(username, password):
     user = login_user(username=username, password=password)
@@ -42,6 +48,6 @@ async def change_data(id, change_info, new_info):
     return f'Пользователь успешно изменил данные\n{data}'
 
 @user_router.delete('/api/delete')
-async def delete_user(user_id: int):
+async def delete_user_db(user_id: int):
     data = delete_user(user_id)
     return data

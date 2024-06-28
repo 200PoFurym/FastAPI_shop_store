@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 
+
 from sqlalchemy import Column, String, Integer, DateTime, Boolean, ForeignKey, Float
 from sqlalchemy.orm import relationship
 from database import Base
@@ -12,6 +13,7 @@ class User(Base):
     email = Column(String, nullable=False, unique=True)
     password = Column(String, nullable=False)
     reg_date = Column(DateTime)
+
 
 class Category(Base):
     __tablename__ = 'categories'
@@ -30,6 +32,9 @@ class Product(Base):
     reg_date = Column(DateTime)
 
     category_fk = relationship(Category, foreign_keys=[category_name], lazy='subquery')
+
+
+
 
 class Order(Base):
     __tablename__ = 'orders'

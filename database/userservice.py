@@ -13,6 +13,8 @@ def check_user_db(username, email):
     else:
         return True
 
+
+
 def register_user_db(username, email, password):
     db = next(get_db())
     checker = check_user_db(username, email)
@@ -42,6 +44,11 @@ def get_profile_db(username):
         return user_info
     return False
 
+def get_all_users():
+    db = next(get_db())
+    all_users = db.query(User).all()
+    return all_users
+
 def change_user_data_db(id, change_info, new_info):
     db = next(get_db())
     user = db.query(User).filter_by(id=id).first()
@@ -52,8 +59,8 @@ def change_user_data_db(id, change_info, new_info):
                 db.commit()
                 return 'username изменен успешно'
             elif change_info == 'email':
-                user = db.query(User).filter_by(email=new_info).first()
-                if user:
+                user_filter = db.query(User).filter_by(email=new_info).first()
+                if user_filter:
                     return 'Этот email занят'
                 else:
                     user.email = new_info

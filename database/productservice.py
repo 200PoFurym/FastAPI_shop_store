@@ -1,3 +1,5 @@
+from fastapi_pagination.ext.sqlalchemy import paginate
+
 from database.models import Product
 from database import get_db
 from datetime import datetime
@@ -13,11 +15,11 @@ def get_exact_product(name: str):
         return exact_product
     return 'Нет такого продукта'
 
-def add_product(name, description, price, quantity):
+def add_product(name, description, price, quantity, category_name):
     db = next(get_db())
     checker = get_exact_product(name)
     if checker:
-        new_product = Product(name=name, description=description, price=price, quantity=quantity, reg_date=datetime.now())
+        new_product = Product(name=name, description=description, price=price, quantity=quantity, category_name=category_name, reg_date=datetime.now())
         db.add(new_product)
         db.commit()
         return 'Продукт добавлен'

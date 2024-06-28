@@ -1,4 +1,6 @@
 from fastapi import APIRouter
+from fastapi_pagination.ext.sqlalchemy import paginate
+
 from database.productservice import *
 
 
@@ -15,8 +17,8 @@ async def exact_product(name: str):
     return data
 
 @product_router.post('/api/add_product')
-async def add_product_db(name: str, description: str, price: float, quantity: int):
-    data = add_product(name=name, description=description, price=price, quantity=quantity)
+async def add_product_db(name: str, description: str, price: float, quantity: int, category_name):
+    data = add_product(name=name, description=description, price=price, quantity=quantity, category_name=category_name)
     return data
 
 @product_router.put('/api/change_product')
