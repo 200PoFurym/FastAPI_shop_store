@@ -45,7 +45,7 @@ async def get_user(username: str):
 @user_router.put('/api/change_data')
 async def change_data(id, change_info, new_info):
     data = change_user_data_db(id=id, change_info=change_info, new_info=new_info)
-    return f'Пользователь успешно изменил данные\n{data}'
+    return data
 
 @user_router.delete('/api/delete')
 async def delete_user_db(user_id: int):
